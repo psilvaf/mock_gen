@@ -1,0 +1,7 @@
+setup.py
+mock_gen/cut_mask.py
+mock_gen.egg-info/PKG-INFO
+mock_gen.egg-info/SOURCES.txt
+mock_gen.egg-info/dependency_links.txt
+mock_gen.egg-info/requires.txt
+mock_gen.egg-info/top_level.txt
