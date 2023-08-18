@@ -43,5 +43,14 @@ def mask_cut(mock_pixels,survey_pix,mock_data,outout_path):
 	mock['DEC']=dec
 	mock['Z']=mock_data[pix_test]['Z_COSMO']
 	mock['DZ_RSD']=mock_data[pix_test]['DZ_RSD']
-	Table(mock).write(outout_path,overwrite=True)
+	tabela=Table(mock)
+	Mock1=tabela[tabela['RA']>270]
+	Mock12=tabela[tabela['RA']<270]
+	new_mock={}
+	new_mock['RA']=np.append(Mock1['RA']-300,Mock12['RA']+60)
+	new_mock['DEC']=np.append(Mock1['DEC']-90,Mock12['DEC']-90)
+	new_mock['Z']=np.append(Mock1['Z'],Mock12['Z'])
+	new_mock['DZ_RSD']=np.append(Mock1['DZ_RSD'],Mock12['DZ_RSD'])
+	
+	Table(new_mock).write(outout_path,overwrite=True)
 	return 
