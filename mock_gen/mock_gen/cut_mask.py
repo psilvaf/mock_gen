@@ -54,3 +54,5 @@ def mask_cut(mock_pixels,survey_pix,mock_data,outout_path):
 	
 	Table(new_mock).write(outout_path,overwrite=True)
 	return 
+	
+
