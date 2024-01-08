@@ -41,7 +41,7 @@ def mask_cut(mock_pixels,survey_pix,mock_data,outout_path):
 	mock={}
 	mock['RA']=ra
 	mock['DEC']=dec
-	mock['Z']=mock_data[pix_test]['Z_COSMO']
+	mock['Z']=mock_data[pix_test]['Z']
 	mock['DZ_RSD']=mock_data[pix_test]['DZ_RSD']
 	tabela=Table(mock)
 	Mock1=tabela[tabela['RA']>270]
@@ -54,5 +54,31 @@ def mask_cut(mock_pixels,survey_pix,mock_data,outout_path):
 	
 	Table(new_mock).write(outout_path,overwrite=True)
 	return 
-	
 
+def mask_cut_random(mock_pixels,survey_pix,outout_path):
+
+	'''
+	Match the full sky output from the mock sample and matches to the survey footprint.
+	mock_pixel(arr): pixels from mocks nested
+	survey_pix(arr): footprint nested
+	z(arr): redshift
+	dz_rsd(arr): redshift space distortion error
+	outout_path(str): path to save file
+	return: mocks for the survey fits file
+	'''
+
+	pix_test=np.arange(mock_pixels.shape[0])[np.in1d(mock_pixels,survey_pix)]
+
+	matched_pix=mock_pixels[pix_test]
+	
+	dec,ra=np.degrees(hp.pix2ang(nside=1024, ipix=matched_pix,nest=True))
+	mock={}
+	mock['RA']=ra
+	mock['DEC']=dec
+	
+	tabela=Table(mock)
+
+	
+	
+	tabela.write(outout_path,overwrite=True)
+	return 
